@@ -1,0 +1,2 @@
+Queue : 1 -> Position : 1 zaid nilawfer has ordered 10 burgers.
+Queue : 2 -> Position : 1 abdul basith has ordered 15 burgers.
