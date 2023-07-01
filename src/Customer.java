@@ -5,19 +5,25 @@ import java.io.IOException;
 import java.util.*;
 public class Customer {
     Scanner scanner= new Scanner(System.in);
-    FoodQueue foodQueue;
     public static LinkedList<String> queue1 = new LinkedList<>();
     public static LinkedList<String> queue2 = new LinkedList<>();
     public static LinkedList<String> queue3 = new LinkedList<>();
+    public static void directAdd(){
+        queue1.add("zaid");
+        queue1.add("zaid");
+        queue2.add("zaid");
+        queue2.add("zaid");
+        queue2.add("zaid");
+        queue3.add("zaid");
+        queue3.add("zaid");
+        queue3.add("zaid");
+        queue3.add("zaid");
+        queue3.add("zaid");
+    }
     static File file;
-
-    private Customer[] customers;
-    private int front;
-    private int rear;
-    private int size;
     public Customer() {
     }
-    public void printAllQueues() {
+    public void printAllQueues(FoodQueue foodQueue) {
         System.out.println();
         System.out.println("*".repeat(16) + "\n" + "*   cashiers   *" + "\n" + "*".repeat(16));
         System.out.println("  1    2    3 \n");
@@ -44,6 +50,18 @@ public class Customer {
             }
             System.out.println();
         }
+
+        System.out.println(queue1);
+        System.out.println(queue2);
+        System.out.println(queue3);
+        foodQueue.printEm();
+        System.out.println();
+        customerWaitingList.printWaiting();
+        System.out.println();
+        burgerWaitingList.printWaiting();
+
+
+
     }
 
     public void printAllEmptyQueues(){
@@ -83,30 +101,55 @@ public class Customer {
         }
     }
     public void addCustomer(FoodQueue foodQueue){
+
         if (foodQueue.BurgersAvailable()>=11){
-            System.out.println("Enter your first name");
-            String firstName=scanner.next();
-            System.out.println("Enter your second name");
-            String secondName=scanner.next();
-            System.out.println("How many Burgers needed ?");
-            int numOfBurgers =scanner.nextInt();
-            if (queue1.size()<2){
-                queue1.add(firstName+" "+secondName);
-                foodQueue.setQueueBurgers(numOfBurgers,1);
-                foodQueue.StockReducer(numOfBurgers);
-            } else if (queue2.size()<3) {
-                queue2.add(firstName+" "+secondName);
-                foodQueue.setQueueBurgers(numOfBurgers,2);
-                foodQueue.StockReducer(numOfBurgers);
-            } else if (queue3.size()<5) {
-                queue3.add(firstName+" "+secondName);
-                foodQueue.setQueueBurgers(numOfBurgers,3);
-                foodQueue.StockReducer(numOfBurgers);
-            }else System.out.println("Queues are full.");
+            try {System.out.println("Enter your first name");
+                String firstName=scanner.next();
+                System.out.println("Enter your second name");
+                String secondName=scanner.next();
+                System.out.println("How many Burgers needed ?");
+                int numOfBurgers =scanner.nextInt();
+                if (queue1.size()<2){
+                    queue1.add(firstName+" "+secondName);
+                    foodQueue.setQueueBurgers(numOfBurgers,1);
+                    foodQueue.StockReducer(numOfBurgers);
+                } else if (queue2.size()<3) {
+                    queue2.add(firstName+" "+secondName);
+                    foodQueue.setQueueBurgers(numOfBurgers,2);
+                    foodQueue.StockReducer(numOfBurgers);
+                } else if (queue3.size()<5) {
+                    queue3.add(firstName+" "+secondName);
+                    foodQueue.setQueueBurgers(numOfBurgers,3);
+                    foodQueue.StockReducer(numOfBurgers);
+                }else{
+                    System.out.println("Queues are full ,customer added to waiting list.");
+                    customerWaitingList.enqueue(firstName+" "+secondName);
+                    burgerWaitingList.enqueue(numOfBurgers);
+                }
+
+            }catch (InputMismatchException e){
+                System.out.println("Enter a valid number of burgers .");
+                scanner.nextLine();
+            }
+
         }else {
             System.out.println("insufficient burgers to place an order please add burgers to stock.");
-        }
 
+        }
+    }
+    public void moveCustomerToFoodQueue(FoodQueue foodQueue){
+        Object name = customerWaitingList.dequeue();
+        Object burgerCount= burgerWaitingList.dequeue();
+        if (queue1.size()<2){
+            queue1.add((String) name);
+            foodQueue.setQueueBurgers((Integer) burgerCount,1);
+        } else if (queue2.size()<3) {
+            queue2.add((String) name);
+            foodQueue.setQueueBurgers((Integer) burgerCount,2);
+        } else if (queue3.size()<5) {
+            queue3.add((String) name);
+            foodQueue.setQueueBurgers((Integer) burgerCount,3);
+        }else System.out.println("didnt work");
     }
     public void removingCustomer(int queueNum,int position){
         if (queueNum==1)queue1.remove(position);
@@ -119,8 +162,12 @@ public class Customer {
             int queueNum = scanner.nextInt();
             if (queueNum<4){
                 removingCustomer(queueNum,0);
-                foodQueue.removeQueueBurgers(0,1);
+                foodQueue.removeQueueBurgers(0,queueNum);
+                if (!customerWaitingList.isEmpty()){
+                    moveCustomerToFoodQueue(foodQueue);
+                }
             }
+
         }catch (InputMismatchException e){System.out.println("Enter a valid Queue.");}
     }
     public void removeASpecificCustomer(FoodQueue foodQueue){
@@ -206,7 +253,7 @@ public class Customer {
             System.out.println("data not stored to file");
         }
     }
+    WaitingListQueue customerWaitingList = new WaitingListQueue(10);
+    WaitingListQueue burgerWaitingList = new WaitingListQueue(10);
 
-//hi
-    //you
 }

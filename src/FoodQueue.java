@@ -10,6 +10,19 @@ public class FoodQueue {
     public static LinkedList<Integer> queue2Burgers = new LinkedList<>();
     public static LinkedList<Integer> queue3Burgers = new LinkedList<>();
 
+    public void directAddB(){
+        queue1Burgers.add(1);
+        queue1Burgers.add(1);
+        queue2Burgers.add(1);
+        queue2Burgers.add(1);
+        queue2Burgers.add(1);
+        queue3Burgers.add(1);
+        queue3Burgers.add(1);
+        queue3Burgers.add(1);
+        queue3Burgers.add(1);
+        queue3Burgers.add(1);
+    }
+
     public FoodQueue(Customer customer) {
         this.customer = customer;
     }
@@ -56,4 +69,10 @@ public class FoodQueue {
     }
     public void StockReducer(int numOfBurgers){burgersAvailable-=numOfBurgers;}
     public int BurgersAvailable(){return burgersAvailable;}
+
+    public void printEm(){
+        System.out.println(queue1Burgers);
+        System.out.println(queue2Burgers);
+        System.out.println(queue3Burgers);
+    }
 }

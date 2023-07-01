@@ -22,7 +22,7 @@ public class Main {
             System.out.println("\nEnter an option from above. \n");
             String action = scanner.next();
             switch (action) {
-                case "100", "VQF" ->customer.printAllQueues();
+                case "100", "VQF" ->customer.printAllQueues(foodQueue);
                 case "101", "VEQ" ->customer.printAllEmptyQueues();
                 case "102", "ACQ" -> customer.addCustomer(foodQueue);
                 case "103", "RCQ" -> customer.removeASpecificCustomer(foodQueue);
