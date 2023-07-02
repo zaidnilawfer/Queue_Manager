@@ -254,5 +254,5 @@ public class Customer {
     }
     WaitingListQueue customerWaitingList = new WaitingListQueue(10);
     WaitingListQueue burgerWaitingList = new WaitingListQueue(10);
-// hi
+
 }
