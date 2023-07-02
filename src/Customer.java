@@ -102,7 +102,7 @@ public class Customer {
     }
     public void addCustomer(FoodQueue foodQueue){
 
-        if (foodQueue.BurgersAvailable()>=11){
+        if      (foodQueue.BurgersAvailable()>=11){
             try {System.out.println("Enter your first name");
                 String firstName=scanner.next();
                 System.out.println("Enter your second name");
@@ -119,7 +119,7 @@ public class Customer {
                     foodQueue.StockReducer(numOfBurgers);
                 } else if (queue3.size()<5) {
                     queue3.add(firstName+" "+secondName);
-                    foodQueue.setQueueBurgers(numOfBurgers,3);
+               foodQueue.setQueueBurgers(numOfBurgers,3);
                     foodQueue.StockReducer(numOfBurgers);
                 }else{
                     System.out.println("Queues are full ,customer added to waiting list.");
@@ -134,7 +134,6 @@ public class Customer {
 
         }else {
             System.out.println("insufficient burgers to place an order please add burgers to stock.");
-
         }
     }
     public void moveCustomerToFoodQueue(FoodQueue foodQueue){
@@ -255,5 +254,5 @@ public class Customer {
     }
     WaitingListQueue customerWaitingList = new WaitingListQueue(10);
     WaitingListQueue burgerWaitingList = new WaitingListQueue(10);
-
+// hi
 }
